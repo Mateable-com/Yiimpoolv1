@@ -94,8 +94,9 @@ sudo chmod g+w $STORAGE_ROOT -R
 print_header "YiiMP Customization"
 print_status "Applying YiimPool customizations..."
 
-sudo sed -i 's/YII MINING POOLS/'${DomainName}' Mining Pool/g' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/index.php
-sudo sed -i 's/domain/'${DomainName}'/g' $STORAGE_ROOT/yiimp/site/web/yaamp/modules/site/index.php
+# We no longer overwrite main.php or coin_form.php here. 
+# The design is managed directly in the YiiMP GitHub repository to prevent layout resets.
+
 sudo sed -i 's/Notes/AddNodes/g' $STORAGE_ROOT/yiimp/site/web/yaamp/models/db_coinsModel.php
 
 print_status "Creating configuration symlinks..."
@@ -103,7 +104,7 @@ sudo ln -s ${STORAGE_ROOT}/yiimp/site/configuration/serverconfig.php /etc/yiimp/
 
 print_status "Updating configuration paths..."
 sudo sed -i "s|/etc/yiimp/serverconfig.php|/etc/yiimp/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/index.php
-sudo sed -i "s|serverconfig.php|/home/crypto-data/yiimp/site/configuration/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/runconsole.php
+sudo sed -i "s|serverconfig.php|${STORAGE_ROOT}/yiimp/site/configuration/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/runconsole.php
 sudo sed -i "s|serverconfig.php|/etc/yiimp/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/run.php
 sudo sed -i "s|/etc/yiimp/serverconfig.php|/etc/yiimp/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/yaamp/yiic.php
 sudo sed -i "s|/etc/yiimp/serverconfig.php|/etc/yiimp/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/yaamp/modules/thread/CronjobController.php
@@ -125,7 +126,7 @@ fi
 
 print_header "Keys Configuration"
 print_status "Setting up unified keys configuration..."
-sudo ln -s /home/crypto-data/yiimp/site/configuration/keys.php /etc/yiimp/keys.php
+sudo ln -s ${STORAGE_ROOT}/yiimp/site/configuration/keys.php /etc/yiimp/keys.php
 
 print_status "Updating exchange configuration paths..."
 sudo find $STORAGE_ROOT/yiimp/site/web/yaamp/core/exchange/ -type f -name "*.php" -exec sed -i 's|require_once.*keys.php.*|if (!defined('\''EXCH_POLONIEX_KEY'\'')) {\n    require_once('\''/etc/yiimp/keys.php'\'');\n}|g' {} +

@@ -13,7 +13,7 @@ source "$STORAGE_ROOT/daemon_builder/conf/info.sh"
 
 cd "$STORAGE_ROOT/daemon_builder" || exit
 
-LATESTVER=$(curl -sL 'https://api.github.com/repos/Afiniel/Yiimpoolv1/releases/latest' | jq -r '.tag_name')
+LATESTVER=$(curl -sL 'https://api.github.com/repos/Mateable-com/Yiimpoolv1/releases/latest' | jq -r '.tag_name')
 
 if [[ "${LATESTVER}" > "${VERSION}" && "${LATESTVER}" != "null" ]]; then
     echo "New version available: ${LATESTVER}"

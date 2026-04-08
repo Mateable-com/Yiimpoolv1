@@ -17,12 +17,12 @@ print_status "Installing cron screens to crontab"
 
 (
     crontab -l 2>/dev/null
-    echo "@reboot sleep 20 && /home/crypto-data/yiimp/starts/screens.start.sh"
+    echo "@reboot sleep 20 && ${STORAGE_ROOT}/yiimp/starts/screens.start.sh"
 ) | crontab -
 if [[ ("$CoinPort" == "no") ]]; then
     (
         crontab -l 2>/dev/null
-        echo "@reboot sleep 20 && /home/crypto-data/yiimp/starts/stratum.start.sh"
+        echo "@reboot sleep 20 && ${STORAGE_ROOT}/yiimp/starts/stratum.start.sh"
     ) | crontab -
 fi
 
@@ -38,7 +38,7 @@ fi
     crontab -l 2>/dev/null
     echo "@reboot source /etc/yiimpool.conf"
 ) | crontab -
-sudo cp -r first_boot.sh /home/crypto-data/yiimp
+sudo cp -r first_boot.sh ${STORAGE_ROOT}/yiimp
 
 print_success "Crontab system configuration complete"
 
@@ -224,20 +224,31 @@ print_header "Updating System Configuration"
 
 echo "source /etc/yiimpool.conf" | hide_output tee -a ~/.bashrc
 echo "source $STORAGE_ROOT/yiimp/.prescreens.start.conf" | hide_output tee -a ~/.bashrc
+
+# Create the missing .prescreens.start.conf file to fix the 'screens' command
+echo "STORAGE_ROOT=\"$STORAGE_ROOT\"
+CRONS=\"$STORAGE_ROOT/yiimp/site/web\"
+LOG_DIR=\"$STORAGE_ROOT/yiimp/site/log\"" | sudo tee $STORAGE_ROOT/yiimp/.prescreens.start.conf >/dev/null
+
 print_success "YiiMP Screens configuration added"
 
 print_status "Cleaning up installation files"
 sudo rm -r $STORAGE_ROOT/yiimp/yiimp_setup
 
-# Fixing exbitron that make white screen and update main.php
-cd $HOME/Yiimpoolv1/yiimp_single/yiimp_confs
-sudo rm -r /home/crypto-data/yiimp/site/web/yaamp/ui/main.php
-sudo rm -r /home/crypto-data/yiimp/site/web/yaamp/modules/admin/coin_form.php
+# --- APPLY 2026 MODERNIZATION ---
+# Copy the modern UI files from the patched source to the active site
+print_status "Applying 2026 Modernization Layout..."
+cd $HOME/yiimp
+sudo cp web/yaamp/ui/main.php ${STORAGE_ROOT}/yiimp/site/web/yaamp/ui/main.php
+sudo cp web/yaamp/modules/admin/coin_form.php ${STORAGE_ROOT}/yiimp/site/web/yaamp/modules/admin/coin_form.php
+sudo cp web/yaamp/ui/css/main.css ${STORAGE_ROOT}/yiimp/site/web/yaamp/ui/css/main.css
+sudo cp web/yaamp/ui/css/table.css ${STORAGE_ROOT}/yiimp/site/web/yaamp/ui/css/table.css
+sudo cp web/yaamp/modules/admin/dashboard.php ${STORAGE_ROOT}/yiimp/site/web/yaamp/modules/admin/dashboard.php
+sudo cp web/yaamp/modules/admin/common_results.php ${STORAGE_ROOT}/yiimp/site/web/yaamp/modules/admin/common_results.php
+sudo cp web/yaamp/modules/admin/coin_results.php ${STORAGE_ROOT}/yiimp/site/web/yaamp/modules/admin/coin_results.php
+sudo cp web/yaamp/modules/admin/login.php ${STORAGE_ROOT}/yiimp/site/web/yaamp/modules/admin/login.php
 
-sudo cp -r main.php /home/crypto-data/yiimp/site/web/yaamp/ui
-sudo cp -r coin_form.php /home/crypto-data/yiimp/site/web/yaamp/modules/admin
-
-print_success "Server cleanup and configuration completed successfully"
+print_success "Server cleanup and 2026 UI modernization completed successfully"
 
 cd $HOME/Yiimpoolv1/yiimp_single
 sudo chmod 755 $STORAGE_ROOT/yiimp/site/log

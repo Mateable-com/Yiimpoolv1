@@ -124,6 +124,9 @@ define('YAAMP_ADMIN_WEBCONSOLE', true);
 define('YAAMP_CREATE_NEW_COINS', true);
 define('YAAMP_NOTIFY_NEW_COINS', false);
 define('YAAMP_DEFAULT_ALGO', 'x11');
+ 
+define('YAAMP_RENTER_COIN', 'BTC');
+define('YIIMP_STRATUM_CTRL_DIR', '/yiimp/site/stratum');
 
 /* Github access token used to scan coin repos for new releases */
 define('GITHUB_ACCESSTOKEN', '<username>:<api-secret>');

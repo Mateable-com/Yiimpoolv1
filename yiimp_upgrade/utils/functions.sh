@@ -24,7 +24,7 @@ BACKUP_DIR="$HOME/yiimpool_backups"
 # Returns the tag string on success, exits non-zero on failure.
 # Does not require jq — uses grep/sed as primary parser with jq as optional enhancement.
 get_latest_release() {
-    local repo="afiniel/Yiimpoolv1"
+    local repo="Mateable-com/Yiimpoolv1"
     local response latest
 
     response=$(curl -sL --max-time 15 \

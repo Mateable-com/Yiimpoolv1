@@ -25,7 +25,7 @@ source "$HOME/Yiimpoolv1/yiimp_single/.wireguard.install.cnf"
 term_art
 
 # Navigate to the setup directory
-cd /home/crypto-data/yiimp/yiimp_setup
+cd ${STORAGE_ROOT}/yiimp/yiimp_setup
 
 print_header "Compiler Setup"
 print_status "Installing and configuring GCC & G++"
@@ -76,12 +76,12 @@ hide_output sudo apt install -y build-essential libzmq5 libtool autotools-dev au
 print_status "Compiling blocknotify and iniparser"
 
 # Compile blocknotify
-cd /home/crypto-data/yiimp/yiimp_setup/yiimp/blocknotify
+cd ${STORAGE_ROOT}/yiimp/yiimp_setup/yiimp/blocknotify
 sudo sed -i "s/tu8tu5/$BlocknotifyPassword/" blocknotify.cpp
 hide_output sudo make -j$(nproc)
 
 print_status "Building stratum "
-cd /home/crypto-data/yiimp/yiimp_setup/yiimp/stratum
+cd ${STORAGE_ROOT}/yiimp/yiimp_setup/yiimp/stratum
 hide_output sudo git submodule init
 hide_output sudo git submodule update
 hide_output sudo make -C algos -j$((`nproc`+1))
@@ -96,7 +96,7 @@ hide_output sudo ./configure --enable-experimental --enable-module-ecdh --with-b
 hide_output sudo make -j$((`nproc`+1))
 
 print_status "Building main stratum"
-cd /home/crypto-data/yiimp/yiimp_setup/yiimp/stratum
+cd ${STORAGE_ROOT}/yiimp/yiimp_setup/yiimp/stratum
 hide_output sudo make buildonly
 
 print_header "File Structure Setup"

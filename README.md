@@ -4,13 +4,13 @@
   <a href="https://discord.gg/vV3JvN5JFm">
     <img alt="Discord" src="https://img.shields.io/discord/904564600354254898?label=Discord">
   </a>
-  <img alt="GitHub issues" src="https://img.shields.io/github/issues/afiniel/Yiimpoolv1">
-  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/afiniel/Yiimpoolv1">
+  <img alt="GitHub issues" src="https://img.shields.io/github/issues/Mateable-com/Yiimpoolv1">
+  <img alt="GitHub release (latest by date)" src="https://img.shields.io/github/v/release/Mateable-com/Yiimpoolv1">
 </p>
 
 ## Overview
 
-YiimPool is a fully automated installer for the [YiiMP](https://github.com/Kudaraidee/yiimp) cryptocurrency mining pool software, targeting Ubuntu and Debian servers. It takes a clean system from zero to a fully operational mining pool — including database setup, web server configuration, stratum compilation, SSL certificates, and server hardening — with minimal manual intervention.
+YiimPool is a fully automated installer for the [YiiMP](https://github.com/Mateable-com/yiimp.git) cryptocurrency mining pool software, targeting Ubuntu and Debian servers. It takes a clean system from zero to a fully operational mining pool — including database setup, web server configuration, stratum compilation, SSL certificates, and server hardening — with minimal manual intervention.
 
 **Core capabilities:**
 
@@ -70,7 +70,7 @@ A clean domain or subdomain pointed to your server's IP address is required befo
 ### Quick Install
 
 ```bash
-curl https://raw.githubusercontent.com/afiniel/Yiimpoolv1/master/install.sh | bash
+curl https://raw.githubusercontent.com/Mateable-com/Yiimpoolv1/master/install.sh | bash
 ```
 
 ### Configuration Steps
@@ -286,7 +286,7 @@ A drop-in file `/etc/ssh/sshd_config.d/10-yiimpool.conf` is written so the main 
 
 ## Support
 
-- Open an issue on [GitHub](https://github.com/afiniel/Yiimpoolv1/issues)
+- Open an issue on [GitHub](https://github.com/Mateable-com/Yiimpoolv1/issues)
 - Join the community on [Discord](https://discord.gg/vV3JvN5JFm)
 
 ---

@@ -57,10 +57,14 @@ print_info "Pre-seeding MariaDB root password for version ${MARIADB_VERSION}"
 
 sudo debconf-set-selections <<< "mariadb-server-$MARIADB_VERSION mysql-server/root_password password $DBRootPassword"
 sudo debconf-set-selections <<< "mariadb-server-$MARIADB_VERSION mysql-server/root_password_again password $DBRootPassword"
+sudo debconf-set-selections <<< "mariadb-server mysql-server/root_password password $DBRootPassword"
+sudo debconf-set-selections <<< "mariadb-server mysql-server/root_password_again password $DBRootPassword"
 
 print_status "Installing MariaDB packages..."
 print_info "Installing mariadb-server mariadb-client"
-hide_output sudo apt install -y mariadb-server mariadb-client
+export DEBIAN_FRONTEND=noninteractive
+export NEEDRESTART_MODE=a
+hide_output sudo -E apt-get -q -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confnew" install mariadb-server mariadb-client
 print_success "MariaDB installation completed"
 
 print_header "Database Configuration"
@@ -141,9 +145,14 @@ SQL_FILES=(
     2025-11-19-add_algo_meowpow.sql
     2025-12-16-add_algo_soterg.sql
     2026-03-29-add_algo_hoohash_pepew.sql
+    2026-04-06-add_rent_address_to_accounts.sql
 )
 
 for file in "${SQL_FILES[@]}"; do
+    if [[ ! -f "$file" ]]; then
+        print_warning "Skipping missing SQL file: $file"
+        continue
+    fi
     print_status "Importing $file..."
     print_info "Processing SQL migration file '$file'"
     if [[ "$file" == *.gz ]]; then
@@ -155,9 +164,9 @@ for file in "${SQL_FILES[@]}"; do
     fi
 done
 
-#cd "$HOME/Yiimpoolv1/yiimp_single"/yiimp_confs
-#print_status "Enabling algorithms..."
-# sudo mariadb -u root -p"${DBRootPassword}" "${YiiMPDBName}" --force < "2025-01-29-enable-all-algos.sql"
+cd "$HOME/Yiimpoolv1/yiimp_single"/yiimp_confs
+print_status "Enabling algorithms..."
+sudo mariadb -u root -p"${DBRootPassword}" "${YiiMPDBName}" --force < "2025-01-29-enable-all-algos.sql"
 print_success "Database import completed successfully"
 
 print_header "MariaDB Optimization"

@@ -149,7 +149,7 @@ function showPageFooter()
 	$year = date("Y", time());
 
 	echo "<p>&copy; $year ".YAAMP_SITE_NAME.' - '.
-		'<a href="https://github.com/afiniel/Yiimpoolv1">Build with YiimPool Yiimp Install script</a></p>';
+		'<a href="https://github.com/Mateable-com/yiimp">Build with YiimPool Yiimp Install script</a></p>';
 
 	echo '</div><!-- footer -->';
 }

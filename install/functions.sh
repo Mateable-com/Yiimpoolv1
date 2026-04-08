@@ -7,7 +7,7 @@
 # 											 #
 ##############################################
 
-source /etc/yiimpoolversion.conf
+source /etc/yiimpoolversion.conf 2>/dev/null || true
 
 ESC_SEQ="\x1b["
 YELLOW='\033[1;33m'

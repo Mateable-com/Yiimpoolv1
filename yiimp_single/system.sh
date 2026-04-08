@@ -58,6 +58,16 @@ elif [[ "$DISTRO" == "11" || "$DISTRO" == "12" || "$DISTRO" == "13" ]]; then
     print_success "CertBot installation complete"
 fi
 
+print_header "Installing Base System Packages"
+
+hide_output sudo apt-get update
+hide_output sudo apt install -y python3 python3-dev python3-pip
+hide_output sudo apt install -y wget curl git sudo coreutils bc gnupg2
+hide_output sudo apt install -y haveged pollinate unzip
+hide_output sudo apt install -y unattended-upgrades cron ntp fail2ban screen rsyslog lolcat nginx haproxy supervisor
+
+print_success "Base system packages installed"
+
 print_header "Installing MariaDB"
 
 # Create directory for keys if it doesn't exist
@@ -110,15 +120,6 @@ export NEEDRESTART_MODE=a
 hide_output sudo -E apt-get upgrade -y
 hide_output sudo -E apt-get dist-upgrade -y
 hide_output sudo -E apt-get autoremove -y
-
-print_header "Installing Base System Packages"
-
-hide_output sudo apt install -y python3 python3-dev python3-pip
-hide_output sudo apt install -y wget curl git sudo coreutils bc
-hide_output sudo apt install -y haveged pollinate unzip
-hide_output sudo apt install -y unattended-upgrades cron ntp fail2ban screen rsyslog lolcat nginx haproxy supervisor
-
-print_success "Base system packages installed"
 
 print_header "Initializing System Random Number Generator"
 # dd to /dev/urandom is a no-op on modern kernels (3.17+); pollinate handles seeding
