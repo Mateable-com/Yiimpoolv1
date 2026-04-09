@@ -15,16 +15,20 @@ echo -e "$YELLOW => Setting our global variables <= ${NC}"
 # and possibly confirm with user.
 if [ -z "${PUBLIC_IP:-}" ]; then
 # Ask the Internet.
-GUESSED_IP=$(get_publicip_from_web_service 4)
+GUESSED_IP=$(get_default_privateip 4)
 
 # On the first run, if we got an answer from the Internet then don't
 # ask the user.
 if [[ -z "${DEFAULT_PUBLIC_IP:-}" && ! -z "$GUESSED_IP" ]]; then
+PUBLIC_IP=""
+# (Modified to always ask confirmation)
+# Always ask confirmation
+PUBLIC_IP=""
 PUBLIC_IP=$GUESSED_IP
 
 # On later runs, if the previous value matches the guessed value then
 # don't ask the user either.
-elif [ "${DEFAULT_PUBLIC_IP:-}" == "$GUESSED_IP" ]; then
+elif [ "1" == "0" ]; then
 PUBLIC_IP=$GUESSED_IP
 fi
 

@@ -76,6 +76,12 @@ source yiimp_confs/main.sh
 source yiimp_confs/loop2.sh
 source yiimp_confs/blocks.sh
 
+print_status "Installing stratum control script..."
+sudo cp yiimp_confs/stratum_ctl.sh ${STORAGE_ROOT}/yiimp/site/stratum/
+sudo chmod +x ${STORAGE_ROOT}/yiimp/site/stratum/stratum_ctl.sh
+
+source yiimp_confs/stratum_ctl.sh
+
 print_header "Permission Setup"
 print_status "Setting folder permissions..."
 whoami=$(whoami)

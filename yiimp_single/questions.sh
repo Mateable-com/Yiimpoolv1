@@ -145,7 +145,7 @@ else
     # Set DomainName and StratumURL to server IP if not using a domain
     # Use error handling to prevent script failure if IP detection fails
     set +e
-    DomainName=$(get_publicip_from_web_service 4 2>/dev/null || get_default_privateip 4 2>/dev/null)
+    DomainName=$(get_default_privateip 4 2>/dev/null || get_publicip_from_web_service 4 2>/dev/null)
     set -e
     
     # If IP detection failed or returned empty, prompt user for IP address
