@@ -77,10 +77,15 @@ source yiimp_confs/loop2.sh
 source yiimp_confs/blocks.sh
 
 print_status "Installing stratum control script..."
-sudo cp yiimp_confs/stratum_ctl.sh ${STORAGE_ROOT}/yiimp/site/stratum/
-sudo chmod +x ${STORAGE_ROOT}/yiimp/site/stratum/stratum_ctl.sh
+sudo cp yiimp_confs/stratum_ctl.sh ${STORAGE_ROOT} /home/crypto-data/yiimp/site/stratum/
+sudo chmod +x ${STORAGE_ROOT} /home/crypto-data/yiimp/site/stratum/stratum_ctl.sh
 
 source yiimp_confs/stratum_ctl.sh
+
+print_status "Configuring sudo permission for stratum control..."
+
+echo "ALL ALL=(yiimpadmin) NOPASSWD: /home/crypto-data/yiimp/site/stratum/stratum_ctl.sh" | sudo tee /etc/sudoers.d/yiimp-stratum > /dev/null
+sudo chmod 440 /etc/sudoers.d/yiimp-stratum
 
 print_header "Permission Setup"
 print_status "Setting folder permissions..."
