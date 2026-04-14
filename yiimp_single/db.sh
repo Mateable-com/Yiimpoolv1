@@ -164,7 +164,7 @@ for file in "${SQL_FILES[@]}"; do
     fi
 done
 
-cd "$HOME/Yiimpoolv1/yiimp_single"/yiimp_confs
+cd "$HOME/Yiimpoolv1/yiimp_single/yiimp_confs"
 print_status "Enabling algorithms..."
 sudo mariadb -u root -p"${DBRootPassword}" "${YiiMPDBName}" --force < "2025-01-29-enable-all-algos.sql"
 print_success "Database import completed successfully"
@@ -207,7 +207,7 @@ print_header "phpMyAdmin Setup"
 print_status "Creating phpMyAdmin user..."
 
 print_info "Creating phpMyAdmin user '${PHPMyAdminUser}' with full privileges"
-sudo mariadb -u root -p"${DBRootPassword}" -e "CREATE USER '${PHPMyAdminUser}'@'%' IDENTIFIED BY '${PHPMyAdminPassword}';"
+sudo mariadb -u root -p"${DBRootPassword}" -e "CREATE USER IF NOT EXISTS '${PHPMyAdminUser}'@'%' IDENTIFIED BY '${PHPMyAdminPassword}';"
 sudo mariadb -u root -p"${DBRootPassword}" -e "GRANT ALL PRIVILEGES ON *.* TO '${PHPMyAdminUser}'@'%' WITH GRANT OPTION;"
 sudo mariadb -u root -p"${DBRootPassword}" -e "FLUSH PRIVILEGES;"
 

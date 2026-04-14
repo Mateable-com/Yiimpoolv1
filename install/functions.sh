@@ -36,7 +36,7 @@ function spinner {
 
 function install_end_message() {
 
-  clear
+  [ -n "$TERM" ] && [ "$TERM" != "dumb" ] && clear
 
   # Define color codes (avoid hardcoding in the function)
   RED='\033[0;31m'
@@ -88,7 +88,7 @@ function install_end_message() {
 
 
 function term_art() {
-  clear
+  [ -n "$TERM" ] && [ "$TERM" != "dumb" ] && clear
 
   # Define color codes
   RED='\033[0;31m'
@@ -139,7 +139,7 @@ function term_art() {
 }
 
 function term_yiimpool {
-  clear
+  [ -n "$TERM" ] && [ "$TERM" != "dumb" ] && clear
 
   # Consistent color definitions (assuming you use the same ones from the main script)
   YIIMP_CYAN="\e[36m"
@@ -148,7 +148,15 @@ function term_yiimpool {
   YIIMP_RESET="\e[0m"
 
   # Center-aligned title with a cool ASCII font
-  figlet -f slant -w 100 "YiimpooL" | lolcat -p 0.12 -s 50  # Adjust centering and speed as desired
+  if command -v figlet >/dev/null 2>&1; then
+      if command -v lolcat >/dev/null 2>&1; then
+          figlet -f slant -w 100 "YiimpooL" | lolcat -p 0.12 -s 50  # Adjust centering and speed as desired
+      else
+          figlet -f slant -w 100 "YiimpooL"
+      fi
+  else
+      echo "YiimpooL"
+  fi
 
   echo -e "${YIIMP_CYAN}  ----------------|---------------------  "
   echo -e "${YIIMP_YELLOW}  Yiimp Installer Script Fork By Afiniel!  "

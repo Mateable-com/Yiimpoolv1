@@ -37,7 +37,7 @@ if [ "$(cat /etc/timezone 2>/dev/null)" != "UTC" ]; then
 fi
 print_success "Timezone set to UTC"
 
-hide_output sudo apt install -y software-properties-common build-essential gnupg2
+hide_output sudo apt install -y software-properties-common build-essential gnupg2 curl
 
 # CertBot
 print_header "Installing CertBot"
@@ -64,7 +64,7 @@ hide_output sudo apt-get update
 hide_output sudo apt install -y python3 python3-dev python3-pip
 hide_output sudo apt install -y wget curl git sudo coreutils bc gnupg2
 hide_output sudo apt install -y haveged pollinate unzip
-hide_output sudo apt install -y unattended-upgrades cron ntp fail2ban screen rsyslog lolcat nginx haproxy supervisor
+hide_output sudo apt install -y unattended-upgrades cron ntp fail2ban screen rsyslog lolcat nginx haproxy supervisor || hide_output sudo apt install -y unattended-upgrades cron ntp fail2ban screen rsyslog ruby-lolcat nginx haproxy supervisor
 
 print_success "Base system packages installed"
 

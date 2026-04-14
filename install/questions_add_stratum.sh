@@ -35,20 +35,7 @@ exit
 fi
 fi
 
-if [ -z "${NewStratumUser:-}" ]; then
-DEFAULT_NewStratumUser='yiimpadmin'
-input_box "Stratum Server User Name" \
-"Enter the user name of the Stratum Server.
-\n\nThis is required for setup to complete.
-\n\nStratum Server User Name:" \
-"$DEFAULT_NewStratumUser" \
-NewStratumUser
-
-if [ -z "$NewStratumUser" ]; then
-# user hit ESC/cancel
-exit
-fi
-fi
+NewStratumUser='yiimpadmin'
 
 if [ -z "${NewStratumPass:-}" ]; then
 DEFAULT_NewStratumPass=$(openssl rand -base64 29 | tr -d "=+/")

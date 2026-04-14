@@ -1204,9 +1204,17 @@ if [[ -f "$ADDPORTCONF" ]]; then
     sudo rm -f $STORAGE_ROOT/daemon_builder/.addport.cnf
 fi
 
-clear
+[ -n "$TERM" ] && [ "$TERM" != "dumb" ] && clear
 echo
-figlet -f slant -w 100 "    DaemonBuilder" | lolcat
+if command -v figlet >/dev/null 2>&1; then
+    if command -v lolcat >/dev/null 2>&1; then
+        figlet -f slant -w 100 "    DaemonBuilder" | lolcat
+    else
+        figlet -f slant -w 100 "    DaemonBuilder"
+    fi
+else
+    echo "    DaemonBuilder"
+fi
 echo
 
 print_header "Update Summary"

@@ -77,10 +77,8 @@ source yiimp_confs/loop2.sh
 source yiimp_confs/blocks.sh
 
 print_status "Installing stratum control script..."
-sudo cp yiimp_confs/stratum_ctl.sh ${STORAGE_ROOT} /home/crypto-data/yiimp/site/stratum/
-sudo chmod +x ${STORAGE_ROOT} /home/crypto-data/yiimp/site/stratum/stratum_ctl.sh
-
-source yiimp_confs/stratum_ctl.sh
+sudo cp yiimp_confs/stratum_ctl.sh ${STORAGE_ROOT}/yiimp/site/stratum/
+sudo chmod +x ${STORAGE_ROOT}/yiimp/site/stratum/stratum_ctl.sh
 
 print_status "Configuring sudo permission for stratum control..."
 
@@ -102,6 +100,10 @@ sudo find $STORAGE_ROOT/yiimp/site/ -type f -exec chmod 664 {} +
 sudo chgrp www-data $STORAGE_ROOT -R
 sudo chmod g+w $STORAGE_ROOT -R
 
+# Ensure stratum_ctl.sh has correct permissions and ownership
+sudo chmod 0755 ${STORAGE_ROOT}/yiimp/site/stratum/stratum_ctl.sh
+sudo chown root:root ${STORAGE_ROOT}/yiimp/site/stratum/stratum_ctl.sh
+
 print_header "YiiMP Customization"
 print_status "Applying YiimPool customizations..."
 
@@ -111,7 +113,7 @@ print_status "Applying YiimPool customizations..."
 sudo sed -i 's/Notes/AddNodes/g' $STORAGE_ROOT/yiimp/site/web/yaamp/models/db_coinsModel.php
 
 print_status "Creating configuration symlinks..."
-sudo ln -s ${STORAGE_ROOT}/yiimp/site/configuration/serverconfig.php /etc/yiimp/serverconfig.php
+sudo ln -sf ${STORAGE_ROOT}/yiimp/site/configuration/serverconfig.php /etc/yiimp/serverconfig.php
 
 print_status "Updating configuration paths..."
 sudo sed -i "s|/etc/yiimp/serverconfig.php|/etc/yiimp/serverconfig.php|g" $STORAGE_ROOT/yiimp/site/web/index.php
@@ -137,7 +139,7 @@ fi
 
 print_header "Keys Configuration"
 print_status "Setting up unified keys configuration..."
-sudo ln -s ${STORAGE_ROOT}/yiimp/site/configuration/keys.php /etc/yiimp/keys.php
+sudo ln -sf ${STORAGE_ROOT}/yiimp/site/configuration/keys.php /etc/yiimp/keys.php
 
 print_status "Updating exchange configuration paths..."
 sudo find $STORAGE_ROOT/yiimp/site/web/yaamp/core/exchange/ -type f -name "*.php" -exec sed -i 's|require_once.*keys.php.*|if (!defined('\''EXCH_POLONIEX_KEY'\'')) {\n    require_once('\''/etc/yiimp/keys.php'\'');\n}|g' {} +

@@ -107,7 +107,7 @@ print_status "Installing base system packages..."
 hide_output sudo apt install -y python3 python3-dev python3-pip \
     wget curl git sudo coreutils bc \
     haveged pollinate unzip \
-    unattended-upgrades cron ntp fail2ban screen rsyslog lolcat nginx
+    unattended-upgrades cron ntp fail2ban screen rsyslog lolcat nginx || sudo apt install -y unattended-upgrades cron ntp fail2ban screen rsyslog ruby-lolcat nginx
 print_success "Base system packages installed."
 
 print_status "Initializing system random number generator..."

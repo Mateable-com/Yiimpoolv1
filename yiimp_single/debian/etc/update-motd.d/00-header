@@ -24,7 +24,7 @@
 # Updated by Afiniel for Yiimpool use...
 #-------------------------------------------------------------------------------
 
-clear
+[ -n "$TERM" ] && [ "$TERM" != "dumb" ] && clear
 
 [ -r /etc/lsb-release ] && . /etc/lsb-release
 
@@ -33,7 +33,15 @@ if [ -z "$DISTRIB_DESCRIPTION" ] && [ -x /usr/bin/lsb_release ]; then
         DISTRIB_DESCRIPTION=$(lsb_release -s -d)
 fi
 
-figlet -f slant -w 100 "YiimpooL" | lolcat -f
+if command -v figlet >/dev/null 2>&1; then
+    if command -v lolcat >/dev/null 2>&1; then
+        figlet -f slant -w 100 "YiimpooL" | lolcat -f
+    else
+        figlet -f slant -w 100 "YiimpooL"
+    fi
+else
+    echo "YiimpooL"
+fi
 printf "\n"
 
 printf "Welcome to %s (%s).\n" "$DISTRIB_DESCRIPTION" "YiimPool Version"

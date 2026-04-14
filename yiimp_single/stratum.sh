@@ -64,7 +64,7 @@ hide_output sudo apt-get -y upgrade
 hide_output sudo apt-get -y install p7zip-full
 
 hide_output sudo apt-get -y install libgmp-dev
-hide_output sudo apt-get -y libmysqlclient-dev
+hide_output sudo apt-get -y install libmysqlclient-dev
 hide_output sudo apt-get -y install libcurl4-openssl-dev
 
 print_status "Installing build dependencies"

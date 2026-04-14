@@ -20,8 +20,7 @@ message_box "Yiimpool Installer $VERSION" \
 # Root warning message box
 message_box "Yiimpool Installer $VERSION" \
 "WARNING: You are about to run this script as root!
-\n\nThe program will create a new user account with sudo privileges.
-\n\nThe next step, you will be asked to create a new user account, you can name it whatever you want."
+\n\nThe program will create a new user account named 'yiimpadmin' with sudo privileges."
 
 # Ask if SSH key or password user
 dialog --title "Create New User With SSH Key" \
@@ -40,19 +39,7 @@ esac
 if [[ "$UsingSSH" == "yes" ]]; then
     clear
 
-    if [ -z "${yiimpadmin:-}" ]; then
-        DEFAULT_yiimpadmin=yiimpadmin
-        input_box "New username" \
-            "Please enter your new username.
-      \n\nUser Name:" \
-            "${DEFAULT_yiimpadmin}" \
-            yiimpadmin
-
-        if [ -z "${yiimpadmin}" ]; then
-            # user hit ESC/cancel
-            exit
-        fi
-    fi
+    yiimpadmin=yiimpadmin
 
     if [ -z "${ssh_key:-}" ]; then
         clear
@@ -199,19 +186,7 @@ fi
 ##############################################################################
 
 # Collect new username if not already set
-if [ -z "${yiimpadmin:-}" ]; then
-    DEFAULT_yiimpadmin=yiimpadmin
-    input_box "Create new username" \
-        "Please enter your new username.
-  \n\nUser Name:" \
-        "${DEFAULT_yiimpadmin}" \
-        yiimpadmin
-
-    if [ -z "${yiimpadmin}" ]; then
-        # user hit ESC/cancel
-        exit
-    fi
-fi
+yiimpadmin=yiimpadmin
 
 # Collect password
 if [ -z "${RootPassword:-}" ]; then
@@ -233,7 +208,7 @@ clear
 
 dialog --title "Verify Your input" \
     --yesno "Please verify your answers before you continue:
-New User Name : ${yiimpadmin}
+New User Name : yiimpadmin
 New User Pass : ${RootPassword}" 8 60
 
 # Get exit status
